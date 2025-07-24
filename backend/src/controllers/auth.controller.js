@@ -39,6 +39,7 @@ export async function signup(req, res) {
       userName,
       password,
       profilePic: randomAvatar,
+      bio: "no bio, this space is still loading…",
     })
 
     // TODO: Create the user is STREAM as well
@@ -145,18 +146,14 @@ export async function onboard(req,res){
       return res.status(400).json({ message: "User not found"});
     }
 
-    const {userName, nativeLanguage, learningLanguage, location} = req.body;
-    let {bio} = req.body;
+    const {userName, nativeLanguage, learningLanguage, location, bio, profilePic} = req.body;
 
-    if(!bio){
-      bio = "This space is still loading…";
-    }
 
     if(!userName || !bio || !nativeLanguage || !learningLanguage || !location){
       return res.status(400).json({ 
         message: "Please enter all fields",
         missingFields: [
-          !userName && "fullName",
+          !userName && "profile name",
           !bio && "bio",
           !nativeLanguage && "native language",
           !learningLanguage && "learning language",
@@ -165,14 +162,26 @@ export async function onboard(req,res){
       });
     }
 
+    const checkUserName = await User.findOne({ 
+      userName,
+      _id: { $ne: userId },
+     });
+
+    
+    if(checkUserName){
+      return res.status(400).json({ message: "Profile name already exists." })
+    }
+    
+
     const updatedUser = await User.findByIdAndUpdate(userId,
       {
         //...req.body // this get all attributes: fullname, bio, etc...
-        nativeLanguage,
         userName, 
+        nativeLanguage,
         learningLanguage,
         location,
         bio,
+        profilePic,
         isOnboarded: true,
       }, {new: true} // if new set to true then this function will return 
                      // the object after update was applied
@@ -210,11 +219,15 @@ export async function onboard(req,res){
 
 export async function getAvatar(req,res){
 
-  const randomAvatar = generateRandomAvatarUrl();
-  
-  res.status(200).json({image: randomAvatar});
+  try {
+    
+    const randomAvatar = generateRandomAvatarUrl();
+    
+    return res.status(200).json({image: randomAvatar});
+  } catch (error) {
+    return res.status(400).json({message: "Error in generating avatar"})
+  }
 
-  return randomAvatar;
 
 }
 
