@@ -1,9 +1,7 @@
 import { useState } from 'react'
 import {Link} from "react-router"
 import { Webcam } from "lucide-react"
-import {useMutation, useQueryClient} from "@tanstack/react-query"
-import {axiosInstance} from "../lib/axios.js"
-import { signup } from '../lib/api.js'
+import useSignup from '../hooks/useSignup.js'
 
 const SignUpPage = () => {
 
@@ -13,12 +11,14 @@ const SignUpPage = () => {
     password: "",
   })
 
-  const queryClient = useQueryClient()
+  // const queryClient = useQueryClient()
 
-  const { mutate: signupMutation, isPending, error } = useMutation({
-    mutationFn: signup,
-    onSuccess:() => queryClient.invalidateQueries({queryKey: ["authUser"]})
-  })
+  // const { mutate: signupMutation, isPending, error } = useMutation({
+  //   mutationFn: signup,
+  //   onSuccess:() => queryClient.invalidateQueries({queryKey: ["authUser"]})
+  // })
+
+  const {signupMutation, isPending, error} = useSignup();
 
   const handleSignup = (e) => {
     e.preventDefault();
@@ -72,7 +72,7 @@ const SignUpPage = () => {
                   placeholder="Enter your name" 
                   className='input input-bordered w-full'
                   value={signupData.fullName}
-                  onChange={(e) => setSignupData({ ...signupData, fullName: e.target.value })}
+                  onChange={(e) => setSignupData((prevData)=>({ ...prevData, fullName: e.target.value }))}
                   required
                   />
                 </div>
@@ -85,7 +85,7 @@ const SignUpPage = () => {
                   placeholder="Enter your email" 
                   className='input input-bordered w-full'
                   value={signupData.email}
-                  onChange={(e) => setSignupData({ ...signupData, email: e.target.value })}
+                  onChange={(e) => setSignupData((prevData)=>({ ...prevData, email: e.target.value }))}
                   required
                   />
                 </div>

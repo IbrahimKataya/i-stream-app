@@ -10,7 +10,6 @@ import { generateImage } from "../lib/api";
 const OnboardingPage = () => {
 
   const {authUser} = useAuthUser();
-  const queryClient = useQueryClient;
 
   const [formState, setFormState] = useState({
     userName: authUser?.userName || "",
@@ -20,6 +19,9 @@ const OnboardingPage = () => {
     location: authUser?.location || "",
     profilePic: authUser?.profilePic || "",
   })
+  
+
+  const queryClient = useQueryClient;
 
   const {mutate: onboardingMutation, isPending} = useMutation({
     mutationFn: completeOnboarding,
