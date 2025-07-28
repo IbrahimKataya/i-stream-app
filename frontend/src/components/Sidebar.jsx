@@ -23,18 +23,18 @@ const Sidebar = () => {
 
         <nav className='flex-1 p-4 space-y-1'>
             <Link to="/" className={`btn btn-ghost justify-start w-full gap-3 px-3 normal-case ${
-                currentPath === "/" ? "btn-active" : "" } `}>
-                <HomeIcon className="size-5 text-base-content opacity-70"/>
+                currentPath === "/" ? "btn-active btn-primary " : "btn-secondary opacity-80" } `}>
+                <HomeIcon className="size-5  opacity-70"/>
                 <span>Home</span>
             </Link>
-            <Link to="/friends" className={`btn btn-ghost justify-start w-full gap-3 px-3 normal-case ${
-                currentPath === "/friends" ? "btn-active" : "" } `}>
-                <User2Icon className="size-5 text-base-content opacity-70"/>
+            <Link to="/friends" className={`btn  btn-ghost justify-start w-full gap-3 px-3 normal-case ${
+                currentPath === "/friends" ? "btn-active btn-primary" : "btn-secondary opacity-80" } `}>
+                <User2Icon className="size-5  opacity-70"/>
                 <span>Friends</span>
             </Link>
             <Link to="/notifications" className={`btn btn-ghost justify-start w-full gap-3 px-3 normal-case ${
-                currentPath === "/notifications" ? "btn-active" : "" } `}>
-                <BellIcon className="size-5 text-base-content opacity-70"/>
+                currentPath === "/notifications" ? "btn-active btn-primary" : "btn-secondary opacity-80" } `}>
+                <BellIcon className="size-5 opacity-70"/>
                 <span>Notifications</span>
             </Link>
         </nav>
