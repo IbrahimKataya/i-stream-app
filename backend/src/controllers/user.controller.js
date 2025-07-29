@@ -63,7 +63,7 @@ export async function sendFriendRequest(req,res){
         const existingRequest = await FriendRequest.findOne({
             $or: [
                 { sender: myId , recipient: recipientId },
-                { sender: recipientId, sender: myId },
+                { sender: recipientId, recipient: myId },
             ]
         });
 
