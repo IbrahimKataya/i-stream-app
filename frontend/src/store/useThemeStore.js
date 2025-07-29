@@ -1,6 +1,9 @@
 import { create } from 'zustand'
 
 export const useThemeStore = create((set) => ({
-  theme: "dark",
-  seTheme: (theme) => set({ theme }),
+  theme: localStorage.getItem("I-STREAM_theme") || "dark",
+  setTheme: (theme) =>{ 
+    localStorage.setItem("I-STREAM_theme");
+    set({ theme });
+  },
 }))
