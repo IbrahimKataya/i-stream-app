@@ -6,8 +6,10 @@ import {CameraIcon , GlobeIcon, LoaderIcon, MapPinIcon, ShuffleIcon, } from "luc
 import { useState } from "react";
 import { LANGUAGES } from "../constants";
 import { generateImage } from "../lib/api";
+import { useNavigate } from "react-router";
 
 const OnboardingPage = () => {
+
 
   const {authUser} = useAuthUser();
 
@@ -21,13 +23,15 @@ const OnboardingPage = () => {
   })
   
 
-  const queryClient = useQueryClient;
+  const queryClient = useQueryClient();
 
+  const navigate = useNavigate();
   const {mutate: onboardingMutation, isPending} = useMutation({
     mutationFn: completeOnboarding,
     onSuccess: () => {
       toast.success("Profile onboarded successfully");
       queryClient.invalidateQueries({ queryKey: ["authUser"] });
+      navigate("/")
     },
 
     onError: (error) => {

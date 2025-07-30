@@ -27,11 +27,11 @@ const Sidebar = () => {
                 <HomeIcon className="size-5  opacity-70"/>
                 <span>Home</span>
             </Link>
-            <Link to="/friends" className={`btn  btn-ghost justify-start w-full gap-3 px-3 normal-case ${
+            {/* <Link to="/friends" className={`btn  btn-ghost justify-start w-full gap-3 px-3 normal-case ${
                 currentPath === "/friends" ? "btn-active btn-primary" : "btn-secondary opacity-80" } `}>
                 <User2Icon className="size-5  opacity-70"/>
                 <span>Friends</span>
-            </Link>
+            </Link> */}
             <Link to="/notifications" className={`btn btn-ghost justify-start w-full gap-3 px-3 normal-case ${
                 currentPath === "/notifications" ? "btn-active btn-primary" : "btn-secondary opacity-80" } `}>
                 <BellIcon className="size-5 opacity-70"/>
@@ -42,11 +42,11 @@ const Sidebar = () => {
         {/* USER PROFILE SECTION */}
         <div className="p-4 border-t border-base-300 mt-auto">
             <div className="flex items-center gap-3">
-                <div className="avatar">
+                <Link to={"/onboarding"} className="avatar">
                     <div className="w-10 rounded-full">
                         <img src={authUser?.profilePic} alt="User Avatar" />
                     </div>
-                </div>
+                </Link>
                 <div className="flex-1">
                     <p className="font-semibold text-sm">{authUser?.userName}</p>
                     <p className="text-xs text-success flex items-center gap-1">
