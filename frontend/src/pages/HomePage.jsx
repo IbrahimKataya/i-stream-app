@@ -6,6 +6,7 @@ import { Users2Icon, MapPinIcon, CheckCircleIcon, UserPlus2Icon } from "lucide-r
 import FriendCard from "../components/FriendCard";
 import NoFriendsFound from "../components/NoFriendsFound";
 import { getLanguageFlag } from "../components/FriendCard";
+import { capitalize } from "../lib/utils";
 
 const HomePage = () => {
   const queryClient = useQueryClient();
@@ -35,14 +36,12 @@ const HomePage = () => {
     const outgoingIds = new Set();
     if(outgoingFriendReqs && outgoingFriendReqs.length > 0){
       outgoingFriendReqs.forEach((req) => {
-        console.log(req);
         outgoingIds.add(req.recipient._id);
       });
       setOutgoingRequestsIds(outgoingIds);
     }
   },[outgoingFriendReqs]);
 
-  console.log(outgoingFriendReqs)
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">
@@ -116,6 +115,10 @@ const HomePage = () => {
                       {/* Languages and flags */}
                       <div className="flex flex-wrap gap-1.5">
                         <span className="badge badge-secondary">
+                          {getLanguageFlag(user.nativeLanguage)}
+                          Native: {capitalize(user.nativeLanguage)}
+                        </span>
+                        <span className="badge badge-outline">
                           {getLanguageFlag(user.learningLanguage)}
                           Learning: {capitalize(user.learningLanguage)}
                         </span>
@@ -155,5 +158,3 @@ const HomePage = () => {
 }
 
 export default HomePage
-
-const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
